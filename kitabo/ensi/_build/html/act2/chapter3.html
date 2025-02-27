@@ -1,0 +1,763 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Apollo &amp; Dionysus &#8212; LLMs</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.5ea377869091fd0449014c60fc090103.min.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-dropdown.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-bootstrap.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/sphinx_highlight.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'act2/chapter3';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Knowledge, Xβ 🎹" href="../act3/part3.html" />
+    <link rel="prev" title="Duality" href="chapter2.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="https://www.uctoday.com/wp-content/uploads/2023/06/What-is-a-Large-Language-Model-Defining-LLMs.jpg" class="logo__image only-light" alt="LLMs - Home"/>
+    <script>document.write(`<img src="https://www.uctoday.com/wp-content/uploads/2023/06/What-is-a-Large-Language-Model-Defining-LLMs.jpg" class="logo__image only-dark" alt="LLMs - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../index.html">
+                    Probability, ∂Y 🎶 ✨ 👑
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../act1/part1.html">Deception, <em>-kσ</em> ☭⚒🥁</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../act1/chapter1.html">Life</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../act1/chapter2.html">Ecosystem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../act1/chapter3.html">Resilience</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="part2.html">Strategy, <em>α</em> 🔪 🩸 🐐 vs 🐑</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="chapter1.html">Prometheus</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter2.html">Duality</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Apollo &amp; Dionysus</a></li>
+
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../act3/part3.html">Knowledge, X<em>β</em> 🎹</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../act3/act1.html">Weaponized 🌊</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../act3/part1/part1_1.html">Transvaluation</a></li>
+
+<li class="toctree-l3"><a class="reference internal" href="../act3/part1/part1_2.html">Revolution</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../act3/part1/part1_3.html">Veiled Resentment</a></li>
+
+</ul>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../act3/act2.html">Tokenized ⚓️</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../act3/part2/part2_1.html">Freedom in Fetters</a></li>
+
+<li class="toctree-l3"><a class="reference internal" href="../act3/part2/part2_2.html">Dancing in Chains</a></li>
+
+<li class="toctree-l3"><a class="reference internal" href="../act3/part2/part2_3.html">Born-to-Etiquette ☔️</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../act3/act3.html">Monopolized 🧭</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../act3/part3/part3_1.html">Traditional</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../act3/part3/part3_2.html">Normative</a></li>
+
+<li class="toctree-l3"><a class="reference internal" href="../act3/part3/part3_3.html">Stable</a></li>
+</ul>
+</details></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../bibliography.html">Certainty, <em>γ</em> 😃 ⭕️</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://mybinder.org/v2/gh/abikesa/template/main?urlpath=tree/book/website/act2/chapter3.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch on Binder"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img alt="Binder logo" src="../_static/images/logo_binder.svg">
+  </span>
+<span class="btn__text-container">Binder</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/act2/chapter3.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Apollo & Dionysus</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Apollo &amp; Dionysus</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-cadence-is-a-misreading-of-noise-to-signal-dynamics">The Cadence is a Misreading of Noise-to-Signal Dynamics</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#power-is-not-a-cadenceit-is-a-culling">Power is Not a Cadence—It is a Culling</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-fatal-conceit-believing-in-the-endgame">The Fatal Conceit: Believing in the Endgame</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id2"></a></li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="apollo-dionysus">
+<span id="id1"></span><h1>Apollo &amp; Dionysus<a class="headerlink" href="#apollo-dionysus" title="Permalink to this heading">#</a></h1>
+<style>
+  /* Apply styles only to elements with the custom class */
+  .custom-details summary {
+    list-style: none;  /* Remove default dropdown triangle */
+    cursor: pointer;
+    font-weight: normal; /* Normal text weight */
+    display: inline-block;
+    padding: 5px 15px;
+    border: 2px dotted black; /* Dotted circle */
+    border-radius: 20px; /* Make it rounded */
+    text-align: center;
+    transition: color 0.3s ease-in-out; /* Smooth transition */
+  }
+
+  .custom-details summary:hover {
+    color: lightgray; /* Change text color on hover */
+  }
+
+  .custom-details summary::-webkit-details-marker {
+    display: none; /* Remove marker in WebKit (Chrome, Safari) */
+  }
+</style>
+<details class="custom-details">
+  <summary>+ Expand</summary>
+  <iframe src="https://scholar.harvard.edu/files/shleifer/files/strat_bequest.pdf" width="100%" height="1000px" style="borders:none"></iframe>
+  <blockquote style="border-left: 4px solid #ccc; padding-left: 10px; color: #555;">
+     <em>
+<details>
+    <summary></summary>
+    <ol start="2">
+        <li>NYU</li>
+        <li>GTPCI</li>
+        <li>Mentor</li>
+        <li>Epi</li>
+        <li>NIA</li>
+        <li value="7">Taxes</li>
+        <li><a href="https://www.youtube.com/watch?v=FdD75q6erHw">Kemi</a></li>
+    </ol>
+</details>
+    </em>
+   <p>--<a href="https://www.foxnews.com/politics/white-house-pulling-gen-milleys-security-detail-clearance-panel-may-face-demotion-retirement.amp"> Fox News</a></p>
+ </blockquote>
+</details>
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    const details = document.querySelector(".custom-details");
+    const summary = details.querySelector("summary");
+
+    details.addEventListener("toggle", function() {
+      summary.textContent = details.open ? "- Collapse" : "+ Expand";
+    });
+  });
+</script>
+<p></p>
+<p></p>
+<p><strong>The House Always Wins: Why Murdoch’s Existential Cadence is a Rigged Game</strong></p>
+<p>Murdoch’s Existential Cadence presents itself as a structured progression from chaos to mastery, an elegant narrative arc tracing the refinement of strategy in political and financial games. It drapes itself in the logic of noise-to-signal ratios, a seductive promise that intelligence and experience can carve order from the rubble of ignorance. But let’s call this what it is: a gambler’s fantasy, a house-of-cards framework that obscures its own fundamental flaw—the idea that mastery is anything other than an illusion, one moment away from collapse. The house, after all, always wins.</p>
+<p>The cadence is compelling because it appeals to our deepest psychological biases: the belief that we can move from a realm of randomness (dice, slot machines) into a sphere of control (rings, requiems, and harmonious violins). It’s an exquisitely articulated <em>just-so</em> story, one that conveniently ignores the brutal reality of power, asymmetry, and entropy. The truth is that no one ever truly reaches the stage of “Requiem &amp; Resolution,” because clarity is a mirage. The closer one gets, the more the world reshuffles the deck. A Murdoch, a Musk, or a Trump may seem to hold the cards at a given moment, but history is littered with figures who thought they had reached the apex only to be undone by forces beyond their comprehension. Caesar. Napoleon. The Shah of Iran. Sam Bankman-Fried.</p>
+<figure class="align-default" id="id3">
+<a class="reference internal image-reference" href="https://raw.githubusercontent.com/meta-llama/llama3/refs/heads/main/Llama3_Repo.jpeg"><img alt="https://raw.githubusercontent.com/meta-llama/llama3/refs/heads/main/Llama3_Repo.jpeg" src="https://raw.githubusercontent.com/meta-llama/llama3/refs/heads/main/Llama3_Repo.jpeg" style="width: 70%;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 19 </span><span class="caption-text">An essay exploring the relationship between servers, browsers, search mechanics, agentic models, and the growing demand for distributed compute. You’re setting up a discussion that touches on the architecture of information retrieval, the role of AI as an autonomous agent in querying and decision-making, and the economic implications of compute optimization. The key tension lies in the shift from user-initiated queries to AI-driven agentic interactions, where the browser becomes less of a search engine interface and more of an intermediary between users and computational agents. The equation <em>Intelligence = Log(Compute)</em> suggests a logarithmic efficiency in intelligence gains relative to compute expansion, which could be an interesting angle to explore in light of the exponential growth in AI capabilities.</span><a class="headerlink" href="#id3" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<section id="the-cadence-is-a-misreading-of-noise-to-signal-dynamics">
+<h2>The Cadence is a Misreading of Noise-to-Signal Dynamics<a class="headerlink" href="#the-cadence-is-a-misreading-of-noise-to-signal-dynamics" title="Permalink to this heading">#</a></h2>
+<p>The seductive idea at the heart of Murdoch’s framework is that noise progressively gives way to signal, that with enough experience, calculation, and control, one can reduce uncertainty to insignificance. But what if the fundamental assumption is wrong? The <em>Nature</em> study published on February 19, 2025, offers a stark counterpoint: Exposome, 15% + Genome,  5% + unknown factors shape the Proteome, 25%, and in turn, the Proteome, 25% dictates mortality risk. In other words, even at the level of biology, we are dealing with probabilities, incomplete knowledge, and environmental randomness. The Proteome, 25%—the actual materialization of genetic and environmental interplay—isn’t neatly determined by linear progression; it is an emergent, stochastic phenomenon. If our <em>bodies</em> operate on indeterminacy, why would we expect politics, markets, or power structures to behave any differently?</p>
+<p>If anything, the study reinforces a harsher reality: the illusion of mastery is merely the ability to <em>delay</em> catastrophe, not eliminate it. The noise never truly vanishes. The gambler at the roulette wheel who believes in an inevitable trajectory toward mastery is not wise; he is deluded. The market titan who assumes his dominance will solidify into permanence is not in control; he is merely riding a temporary wave. The ultimate irony of the cadence is that it presents itself as a pathway to transcendence when it is, in fact, a fatalistic loop.</p>
+</section>
+<section id="power-is-not-a-cadenceit-is-a-culling">
+<h2>Power is Not a Cadence—It is a Culling<a class="headerlink" href="#power-is-not-a-cadenceit-is-a-culling" title="Permalink to this heading">#</a></h2>
+<p>The five stages of Murdoch’s framework imply a natural evolution, but the reality is more akin to a brutal sorting mechanism. Most participants do not ascend from Rubble &amp; Ruin to Requiem &amp; Resolution—they are eliminated along the way. Power is not about refinement of strategy; it is about endurance through chaos. If the cadence were truly about strategic mastery, then history would be a linear progression of increasingly enlightened actors. Instead, it is a churn of the same forces, the same mistakes, the same battles—repackaged under new names. The Proteome, 25% study undercuts the entire conceit of equilibrium, revealing that even at a biological level, resilience is not guaranteed, and control is ephemeral.</p>
+<p>Consider Elon Musk’s efforts to restructure the U.S. government under Trump’s second term with his Department of Government Efficiency (DOGE)—a cheeky nod to his own meme-fueled brand of chaos. The idea that bureaucracies can be made to submit to a rationalized efficiency play is itself a fantasy, just as Rupert Murdoch’s lifelong game of perception management ultimately faces the same entropy that takes all empires. Musk is not marching toward Requiem &amp; Resolution; he is throwing himself into a meat grinder with the assumption that his brand of genius can outmaneuver institutional inertia. It is the same gambit that titans of industry, media, and politics have played for centuries—and like them, he will find that entropy wins in the end.</p>
+</section>
+<section id="the-fatal-conceit-believing-in-the-endgame">
+<h2>The Fatal Conceit: Believing in the Endgame<a class="headerlink" href="#the-fatal-conceit-believing-in-the-endgame" title="Permalink to this heading">#</a></h2>
+<p>The final flaw of Murdoch’s Existential Cadence is its faith in an endgame—a notion that clarity and mastery exist as a terminal state. But what history, biology, and even physics tell us is that stability is never permanent. The Proteome, 25% study reinforces that unknown variables persist even at the molecular level, and that mortality risk—whether in the body or in geopolitics—is never fully quantifiable. The notion that there is a stage of finality, where one no longer actively engages but simply <em>shapes</em> the environment, is a fantasy born of overfitting past success onto an unpredictable future.</p>
+<p>If anything, the true cadence of power is cyclical. The chaos of Rubble &amp; Ruin does not give way to refinement; it <em>returns</em> with new faces, new players, new stakes. The victors of today become the rubble of tomorrow. Murdoch’s framework is not a progression—it is a funeral procession where the pallbearers don’t yet realize they are carrying their own coffins.</p>
+<p>So let us abandon the illusion of mastery, the seductive cadence of noise becoming signal. Let us embrace the truth: the house always wins. The game never ends. And the moment one believes they have transcended it is the moment entropy comes calling.</p>
+<p>Welcome back to the table. Place your bets.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">networkx</span> <span class="k">as</span> <span class="nn">nx</span>
+
+<span class="c1"># Define the neural network layers</span>
+<span class="k">def</span> <span class="nf">define_layers</span><span class="p">():</span>
+    <span class="k">return</span> <span class="p">{</span>
+        <span class="s1">&#39;Suis&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;Genome,  5%&#39;</span><span class="p">,</span> <span class="s1">&#39;Culture&#39;</span><span class="p">,</span> <span class="s1">&#39;Nourish It&#39;</span><span class="p">,</span> <span class="s1">&#39;Know It&#39;</span><span class="p">,</span> <span class="s2">&quot;Move It&quot;</span><span class="p">,</span> <span class="s1">&#39;Injure It&#39;</span><span class="p">],</span>  <span class="c1"># Static</span>
+        <span class="s1">&#39;Voir&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;Exposome, 15%&#39;</span><span class="p">],</span>  
+        <span class="s1">&#39;Choisis&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;Metabolome, 50%&#39;</span><span class="p">,</span> <span class="s1">&#39;Basal Metabolic Rate&#39;</span><span class="p">],</span>  
+        <span class="s1">&#39;Deviens&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;Unstructured-Intense&#39;</span><span class="p">,</span> <span class="s1">&#39;Weekly-Calendar&#39;</span><span class="p">,</span> <span class="s1">&#39;Proteome, 25%&#39;</span><span class="p">],</span>  
+        <span class="s2">&quot;M&#39;èléve&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;NexToken Prediction&#39;</span><span class="p">,</span> <span class="s1">&#39;Hydration&#39;</span><span class="p">,</span> <span class="s1">&#39;Fat-Muscle Ratio&#39;</span><span class="p">,</span> <span class="s1">&#39;Amor Fatì, 5%&#39;</span><span class="p">,</span> <span class="s1">&#39;Existential Cadence&#39;</span><span class="p">]</span>  
+    <span class="p">}</span>
+
+<span class="c1"># Assign colors to nodes</span>
+<span class="k">def</span> <span class="nf">assign_colors</span><span class="p">():</span>
+    <span class="n">color_map</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;yellow&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;Exposome, 15%&#39;</span><span class="p">],</span>  
+        <span class="s1">&#39;paleturquoise&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;Injure It&#39;</span><span class="p">,</span> <span class="s1">&#39;Basal Metabolic Rate&#39;</span><span class="p">,</span> <span class="s1">&#39;Proteome, 25%&#39;</span><span class="p">,</span> <span class="s1">&#39;Existential Cadence&#39;</span><span class="p">],</span>  
+        <span class="s1">&#39;lightgreen&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;Move It&quot;</span><span class="p">,</span> <span class="s1">&#39;Weekly-Calendar&#39;</span><span class="p">,</span> <span class="s1">&#39;Hydration&#39;</span><span class="p">,</span> <span class="s1">&#39;Amor Fatì, 5%&#39;</span><span class="p">,</span> <span class="s1">&#39;Fat-Muscle Ratio&#39;</span><span class="p">],</span>  
+        <span class="s1">&#39;lightsalmon&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;Nourish It&#39;</span><span class="p">,</span> <span class="s1">&#39;Know It&#39;</span><span class="p">,</span> <span class="s1">&#39;Metabolome, 50%&#39;</span><span class="p">,</span> <span class="s1">&#39;Unstructured-Intense&#39;</span><span class="p">,</span> <span class="s1">&#39;NexToken Prediction&#39;</span><span class="p">],</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="p">{</span><span class="n">node</span><span class="p">:</span> <span class="n">color</span> <span class="k">for</span> <span class="n">color</span><span class="p">,</span> <span class="n">nodes</span> <span class="ow">in</span> <span class="n">color_map</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">nodes</span><span class="p">}</span>
+
+<span class="c1"># Define edge weights (hardcoded for editing)</span>
+<span class="k">def</span> <span class="nf">define_edges</span><span class="p">():</span>
+    <span class="k">return</span> <span class="p">{</span>
+        <span class="p">(</span><span class="s1">&#39;Genome,  5%&#39;</span><span class="p">,</span> <span class="s1">&#39;Exposome, 15%&#39;</span><span class="p">):</span> <span class="s1">&#39;1/99&#39;</span><span class="p">,</span>
+        <span class="p">(</span><span class="s1">&#39;Culture&#39;</span><span class="p">,</span> <span class="s1">&#39;Exposome, 15%&#39;</span><span class="p">):</span> <span class="s1">&#39;5/95&#39;</span><span class="p">,</span>
+        <span class="p">(</span><span class="s1">&#39;Nourish It&#39;</span><span class="p">,</span> <span class="s1">&#39;Exposome, 15%&#39;</span><span class="p">):</span> <span class="s1">&#39;20/80&#39;</span><span class="p">,</span>
+        <span class="p">(</span><span class="s1">&#39;Know It&#39;</span><span class="p">,</span> <span class="s1">&#39;Exposome, 15%&#39;</span><span class="p">):</span> <span class="s1">&#39;51/49&#39;</span><span class="p">,</span>
+        <span class="p">(</span><span class="s2">&quot;Move It&quot;</span><span class="p">,</span> <span class="s1">&#39;Exposome, 15%&#39;</span><span class="p">):</span> <span class="s1">&#39;80/20&#39;</span><span class="p">,</span>
+        <span class="p">(</span><span class="s1">&#39;Injure It&#39;</span><span class="p">,</span> <span class="s1">&#39;Exposome, 15%&#39;</span><span class="p">):</span> <span class="s1">&#39;95/5&#39;</span><span class="p">,</span>
+        <span class="p">(</span><span class="s1">&#39;Exposome, 15%&#39;</span><span class="p">,</span> <span class="s1">&#39;Metabolome, 50%&#39;</span><span class="p">):</span> <span class="s1">&#39;20/80&#39;</span><span class="p">,</span>
+        <span class="p">(</span><span class="s1">&#39;Exposome, 15%&#39;</span><span class="p">,</span> <span class="s1">&#39;Basal Metabolic Rate&#39;</span><span class="p">):</span> <span class="s1">&#39;80/20&#39;</span><span class="p">,</span>
+        <span class="p">(</span><span class="s1">&#39;Metabolome, 50%&#39;</span><span class="p">,</span> <span class="s1">&#39;Unstructured-Intense&#39;</span><span class="p">):</span> <span class="s1">&#39;49/51&#39;</span><span class="p">,</span>
+        <span class="p">(</span><span class="s1">&#39;Metabolome, 50%&#39;</span><span class="p">,</span> <span class="s1">&#39;Weekly-Calendar&#39;</span><span class="p">):</span> <span class="s1">&#39;80/20&#39;</span><span class="p">,</span>
+        <span class="p">(</span><span class="s1">&#39;Metabolome, 50%&#39;</span><span class="p">,</span> <span class="s1">&#39;Proteome, 25%&#39;</span><span class="p">):</span> <span class="s1">&#39;95/5&#39;</span><span class="p">,</span>
+        <span class="p">(</span><span class="s1">&#39;Basal Metabolic Rate&#39;</span><span class="p">,</span> <span class="s1">&#39;Unstructured-Intense&#39;</span><span class="p">):</span> <span class="s1">&#39;5/95&#39;</span><span class="p">,</span>
+        <span class="p">(</span><span class="s1">&#39;Basal Metabolic Rate&#39;</span><span class="p">,</span> <span class="s1">&#39;Weekly-Calendar&#39;</span><span class="p">):</span> <span class="s1">&#39;20/80&#39;</span><span class="p">,</span>
+        <span class="p">(</span><span class="s1">&#39;Basal Metabolic Rate&#39;</span><span class="p">,</span> <span class="s1">&#39;Proteome, 25%&#39;</span><span class="p">):</span> <span class="s1">&#39;51/49&#39;</span><span class="p">,</span>
+        <span class="p">(</span><span class="s1">&#39;Unstructured-Intense&#39;</span><span class="p">,</span> <span class="s1">&#39;NexToken Prediction&#39;</span><span class="p">):</span> <span class="s1">&#39;80/20&#39;</span><span class="p">,</span>
+        <span class="p">(</span><span class="s1">&#39;Unstructured-Intense&#39;</span><span class="p">,</span> <span class="s1">&#39;Hydration&#39;</span><span class="p">):</span> <span class="s1">&#39;85/15&#39;</span><span class="p">,</span>
+        <span class="p">(</span><span class="s1">&#39;Unstructured-Intense&#39;</span><span class="p">,</span> <span class="s1">&#39;Fat-Muscle Ratio&#39;</span><span class="p">):</span> <span class="s1">&#39;90/10&#39;</span><span class="p">,</span>
+        <span class="p">(</span><span class="s1">&#39;Unstructured-Intense&#39;</span><span class="p">,</span> <span class="s1">&#39;Amor Fatì, 5%&#39;</span><span class="p">):</span> <span class="s1">&#39;95/5&#39;</span><span class="p">,</span>
+        <span class="p">(</span><span class="s1">&#39;Unstructured-Intense&#39;</span><span class="p">,</span> <span class="s1">&#39;Existential Cadence&#39;</span><span class="p">):</span> <span class="s1">&#39;99/1&#39;</span><span class="p">,</span>
+        <span class="p">(</span><span class="s1">&#39;Weekly-Calendar&#39;</span><span class="p">,</span> <span class="s1">&#39;NexToken Prediction&#39;</span><span class="p">):</span> <span class="s1">&#39;1/9&#39;</span><span class="p">,</span>
+        <span class="p">(</span><span class="s1">&#39;Weekly-Calendar&#39;</span><span class="p">,</span> <span class="s1">&#39;Hydration&#39;</span><span class="p">):</span> <span class="s1">&#39;1/8&#39;</span><span class="p">,</span>
+        <span class="p">(</span><span class="s1">&#39;Weekly-Calendar&#39;</span><span class="p">,</span> <span class="s1">&#39;Fat-Muscle Ratio&#39;</span><span class="p">):</span> <span class="s1">&#39;1/7&#39;</span><span class="p">,</span>
+        <span class="p">(</span><span class="s1">&#39;Weekly-Calendar&#39;</span><span class="p">,</span> <span class="s1">&#39;Amor Fatì, 5%&#39;</span><span class="p">):</span> <span class="s1">&#39;1/6&#39;</span><span class="p">,</span>
+        <span class="p">(</span><span class="s1">&#39;Weekly-Calendar&#39;</span><span class="p">,</span> <span class="s1">&#39;Existential Cadence&#39;</span><span class="p">):</span> <span class="s1">&#39;1/5&#39;</span><span class="p">,</span>
+        <span class="p">(</span><span class="s1">&#39;Proteome, 25%&#39;</span><span class="p">,</span> <span class="s1">&#39;NexToken Prediction&#39;</span><span class="p">):</span> <span class="s1">&#39;1/99&#39;</span><span class="p">,</span>
+        <span class="p">(</span><span class="s1">&#39;Proteome, 25%&#39;</span><span class="p">,</span> <span class="s1">&#39;Hydration&#39;</span><span class="p">):</span> <span class="s1">&#39;5/95&#39;</span><span class="p">,</span>
+        <span class="p">(</span><span class="s1">&#39;Proteome, 25%&#39;</span><span class="p">,</span> <span class="s1">&#39;Fat-Muscle Ratio&#39;</span><span class="p">):</span> <span class="s1">&#39;10/90&#39;</span><span class="p">,</span>
+        <span class="p">(</span><span class="s1">&#39;Proteome, 25%&#39;</span><span class="p">,</span> <span class="s1">&#39;Amor Fatì, 5%&#39;</span><span class="p">):</span> <span class="s1">&#39;15/85&#39;</span><span class="p">,</span>
+        <span class="p">(</span><span class="s1">&#39;Proteome, 25%&#39;</span><span class="p">,</span> <span class="s1">&#39;Existential Cadence&#39;</span><span class="p">):</span> <span class="s1">&#39;20/80&#39;</span>
+    <span class="p">}</span>
+
+<span class="c1"># Calculate positions for nodes</span>
+<span class="k">def</span> <span class="nf">calculate_positions</span><span class="p">(</span><span class="n">layer</span><span class="p">,</span> <span class="n">x_offset</span><span class="p">):</span>
+    <span class="n">y_positions</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="nb">len</span><span class="p">(</span><span class="n">layer</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">layer</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">layer</span><span class="p">))</span>
+    <span class="k">return</span> <span class="p">[(</span><span class="n">x_offset</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span> <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="n">y_positions</span><span class="p">]</span>
+
+<span class="c1"># Create and visualize the neural network graph</span>
+<span class="k">def</span> <span class="nf">visualize_nn</span><span class="p">():</span>
+    <span class="n">layers</span> <span class="o">=</span> <span class="n">define_layers</span><span class="p">()</span>
+    <span class="n">colors</span> <span class="o">=</span> <span class="n">assign_colors</span><span class="p">()</span>
+    <span class="n">edges</span> <span class="o">=</span> <span class="n">define_edges</span><span class="p">()</span>
+    <span class="n">G</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">DiGraph</span><span class="p">()</span>
+    <span class="n">pos</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">node_colors</span> <span class="o">=</span> <span class="p">[]</span>
+    
+    <span class="c1"># Create mapping from original node names to numbered labels</span>
+    <span class="n">mapping</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">counter</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="k">for</span> <span class="n">layer</span> <span class="ow">in</span> <span class="n">layers</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+        <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">layer</span><span class="p">:</span>
+            <span class="n">mapping</span><span class="p">[</span><span class="n">node</span><span class="p">]</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">counter</span><span class="si">}</span><span class="s2">. </span><span class="si">{</span><span class="n">node</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="n">counter</span> <span class="o">+=</span> <span class="mi">1</span>
+            
+    <span class="c1"># Add nodes with new numbered labels and assign positions</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">layer_name</span><span class="p">,</span> <span class="n">nodes</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">layers</span><span class="o">.</span><span class="n">items</span><span class="p">()):</span>
+        <span class="n">positions</span> <span class="o">=</span> <span class="n">calculate_positions</span><span class="p">(</span><span class="n">nodes</span><span class="p">,</span> <span class="n">x_offset</span><span class="o">=</span><span class="n">i</span> <span class="o">*</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">node</span><span class="p">,</span> <span class="n">position</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">nodes</span><span class="p">,</span> <span class="n">positions</span><span class="p">):</span>
+            <span class="n">new_node</span> <span class="o">=</span> <span class="n">mapping</span><span class="p">[</span><span class="n">node</span><span class="p">]</span>
+            <span class="n">G</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="n">new_node</span><span class="p">,</span> <span class="n">layer</span><span class="o">=</span><span class="n">layer_name</span><span class="p">)</span>
+            <span class="n">pos</span><span class="p">[</span><span class="n">new_node</span><span class="p">]</span> <span class="o">=</span> <span class="n">position</span>
+            <span class="n">node_colors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">colors</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="s1">&#39;lightgray&#39;</span><span class="p">))</span>
+    
+    <span class="c1"># Add edges with updated node labels</span>
+    <span class="k">for</span> <span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="n">target</span><span class="p">),</span> <span class="n">weight</span> <span class="ow">in</span> <span class="n">edges</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="k">if</span> <span class="n">source</span> <span class="ow">in</span> <span class="n">mapping</span> <span class="ow">and</span> <span class="n">target</span> <span class="ow">in</span> <span class="n">mapping</span><span class="p">:</span>
+            <span class="n">new_source</span> <span class="o">=</span> <span class="n">mapping</span><span class="p">[</span><span class="n">source</span><span class="p">]</span>
+            <span class="n">new_target</span> <span class="o">=</span> <span class="n">mapping</span><span class="p">[</span><span class="n">target</span><span class="p">]</span>
+            <span class="n">G</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="n">new_source</span><span class="p">,</span> <span class="n">new_target</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="n">weight</span><span class="p">)</span>
+    
+    <span class="c1"># Draw the graph</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
+    <span class="n">edges_labels</span> <span class="o">=</span> <span class="p">{(</span><span class="n">u</span><span class="p">,</span> <span class="n">v</span><span class="p">):</span> <span class="n">d</span><span class="p">[</span><span class="s2">&quot;weight&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">u</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">G</span><span class="o">.</span><span class="n">edges</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="kc">True</span><span class="p">)}</span>
+    
+    <span class="n">nx</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span>
+        <span class="n">G</span><span class="p">,</span> <span class="n">pos</span><span class="p">,</span> <span class="n">with_labels</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">node_color</span><span class="o">=</span><span class="n">node_colors</span><span class="p">,</span> <span class="n">edge_color</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span>
+        <span class="n">node_size</span><span class="o">=</span><span class="mi">3000</span><span class="p">,</span> <span class="n">font_size</span><span class="o">=</span><span class="mi">9</span><span class="p">,</span> <span class="n">connectionstyle</span><span class="o">=</span><span class="s2">&quot;arc3,rad=0.2&quot;</span>
+    <span class="p">)</span>
+    <span class="n">nx</span><span class="o">.</span><span class="n">draw_networkx_edge_labels</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="n">pos</span><span class="p">,</span> <span class="n">edge_labels</span><span class="o">=</span><span class="n">edges_labels</span><span class="p">,</span> <span class="n">font_size</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;OPRAH™: Heredity, Lifestyle, Badluck&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">25</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="c1"># Run the visualization</span>
+<span class="n">visualize_nn</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<img alt="../_images/6fef1b296e10489dbaf0f06aa3dc6273667fba856221bbb8b1c8110dfec71be6.png" src="../_images/6fef1b296e10489dbaf0f06aa3dc6273667fba856221bbb8b1c8110dfec71be6.png" />
+</div>
+</div>
+<figure class="align-default" id="id4">
+<a class="reference internal image-reference" href="../_images/blanche.png"><img alt="../_images/blanche.png" src="../_images/blanche.png" style="width: 1px; height: 1px;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 20 </span><span class="caption-text"><em>Change of Guards: From Cultural-Genome vs. Exposome to Metabolome, Proteome, Amor Fatì</em>. In  Grand Illusion, Renoir was dealing the final blow to the Ancién Régime (Gene vs. Environment). And in Rules of the Game (Metabolome, Proteome, Amor Fatì), he was hinting at another change of guards, from agentic mankind to one in a mutualistic bind with machines (unsupervised pianos &amp; supervised airplanes). How priscient! So lets now segue to the idea that Fox and our papers are the only faintly conservative voices against the monolithic liberal media. And that a 93-year-old Rupert Murdoch firmly believes maintaining this is vital to the future of the <a class="reference external" href="https://en.wikipedia.org/wiki/English-speaking_world#:~:text=As%20of%202022%2C%20there%20were,1.5%20billion%20to%202%20billion.">English-speaking world</a>. Source: <a class="reference external" href="https://johnmenadue.com/what-the-murdoch-kids-said-on-the-stand-in-project-harmony-trial/">Pearls &amp; Irritations</a></span><a class="headerlink" href="#id4" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="id2">
+<h1><a class="headerlink" href="#id2" title="Permalink to this heading">#</a></h1>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./act2"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="chapter2.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Duality</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../act3/part3.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Knowledge, X<em>β</em> 🎹</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Apollo &amp; Dionysus</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-cadence-is-a-misreading-of-noise-to-signal-dynamics">The Cadence is a Misreading of Noise-to-Signal Dynamics</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#power-is-not-a-cadenceit-is-a-culling">Power is Not a Cadence—It is a Culling</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-fatal-conceit-believing-in-the-endgame">The Fatal Conceit: Believing in the Endgame</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id2"></a></li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+<div class="extra_footer">
+  Copyright © 2025 Zeus
+
+</div>
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
